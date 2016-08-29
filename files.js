@@ -20,4 +20,3 @@ if (Meteor.isServer) {
     return Images.find().cursor;
   });
 }
-

@@ -3,24 +3,6 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
-});
-
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
-});
-
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
-});
-
 Template.uploadForm.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);
 });
@@ -48,9 +30,9 @@ Template.uploadForm.events({
 
       upload.on('end', function (error, fileObj) {
         if (error) {
-          alert('Error during upload: ' + error);
+          console.log('Error during upload: ' + error);
         } else {
-          alert('File "' + fileObj.name + '" successfully uploaded');
+          console.log('File "' + fileObj.name + '" successfully uploaded');
         }
         template.currentUpload.set(false);
       });
@@ -58,4 +40,17 @@ Template.uploadForm.events({
       upload.start();
     }
   }
+});
+
+Template.uploadedFiles.helpers({
+	images: function () {
+		return Images.find();
+	}
+});
+
+Template.image.helpers({
+	uri: function () {
+		console.log(this);
+		return this.link;
+	}
 });
